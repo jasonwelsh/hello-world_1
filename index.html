@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Focus Timer</title>
+  <link rel="stylesheet" href="static/css/hello_world_1.css">
+  <script defer src="static/js/hello_world_1.js"></script>
+</head>
+<body>
+
+  <!-- Session tracking row -->
+  <header class="timer-header">
+    <div class="session-row">
+      <div id="session-dots" class="session-dots"></div>
+      <span id="session-count" class="session-count">0 / 4</span>
+    </div>
+  </header>
+
+  <main class="timer-main">
+
+    <!-- Timer card -->
+    <div id="timer-card" class="timer-card">
+      <div id="phase-label" class="phase-label">Focus</div>
+      <div id="timer-display" class="timer-display">25:00</div>
+      <div class="progress-track">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button id="start-btn" class="btn btn-primary">Start</button>
+      <button id="reset-btn" class="btn btn-danger">Reset</button>
+    </div>
+
+    <!-- Settings toggle -->
+    <button id="settings-toggle" class="settings-toggle">Settings</button>
+
+    <!-- Settings panel -->
+    <div id="settings-panel" class="settings-panel">
+      <div class="setting-row">
+        <label for="set-focus">Focus (min)</label>
+        <input type="number" id="set-focus" value="25" min="1" max="90">
+      </div>
+      <div class="setting-row">
+        <label for="set-short">Short break (min)</label>
+        <input type="number" id="set-short" value="5" min="1" max="30">
+      </div>
+      <div class="setting-row">
+        <label for="set-long">Long break (min)</label>
+        <input type="number" id="set-long" value="15" min="1" max="60">
+      </div>
+      <div class="setting-row">
+        <label for="set-sessions">Sessions before long break</label>
+        <input type="number" id="set-sessions" value="4" min="2" max="10">
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="timer-footer">
+    <p>&copy; 2026</p>
+  </footer>
+
+</body>
+</html>

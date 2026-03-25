@@ -1,0 +1,282 @@
+/* hello_world_1 — Base CSS: Custom Properties, Reset, Font Stack */
+
+/* ── Color Palette ── */
+:root {
+  --color-bg:           #1e1e2e;
+  --color-bg-secondary: #252536;
+  --color-bg-input:     #2a2a3c;
+  --color-bg-card:      #313244;
+
+  --color-fg:           #cdd6f4;
+  --color-fg-dim:       #6c7086;
+  --color-fg-bright:    #ffffff;
+
+  --color-accent:       #89b4fa;
+  --color-green:        #a6e3a1;
+  --color-yellow:       #f9e2af;
+  --color-red:          #f38ba8;
+  --color-peach:        #fab387;
+  --color-mauve:        #cba6f7;
+  --color-teal:         #94e2d5;
+  --color-sky:          #89dceb;
+}
+
+/* ── Spacing Scale ── */
+:root {
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+}
+
+/* ── Font Stack ── */
+:root {
+  --font-sans: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+               Arial, sans-serif;
+  --font-mono: 'Consolas', 'SF Mono', 'Fira Code', 'Cascadia Code',
+               'Courier New', monospace;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+}
+
+/* ── Box-Sizing Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base Styles ── */
+html {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-6) var(--space-4);
+  gap: var(--space-5);
+}
+
+/* ── Phase-driven accent color ── */
+:root                          { --phase-accent: var(--color-accent); }
+body[data-phase="focus"]       { --phase-accent: var(--color-accent); }
+body[data-phase="short_break"] { --phase-accent: var(--color-green);  }
+body[data-phase="long_break"]  { --phase-accent: var(--color-teal);   }
+
+/* ── Header / Session Row ── */
+.timer-header {
+  width: 100%;
+  max-width: 360px;
+}
+
+.session-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.session-dots {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.session-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.35s, box-shadow 0.35s;
+}
+
+.session-dot.filled {
+  background: var(--phase-accent);
+  box-shadow: 0 0 6px var(--phase-accent);
+}
+
+.session-count {
+  font-size: 0.75rem;
+  color: var(--color-fg-dim);
+}
+
+/* ── Main layout ── */
+.timer-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 360px;
+}
+
+/* ── Timer Card ── */
+.timer-card {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: var(--space-10) var(--space-8);
+  text-align: center;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.5s;
+}
+
+.timer-card.running {
+  box-shadow: 0 0 40px -10px var(--phase-accent);
+}
+
+.phase-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--phase-accent);
+  margin-bottom: var(--space-3);
+  transition: color 0.4s;
+}
+
+.timer-display {
+  font-size: clamp(3.8rem, 18vw, 6.5rem);
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--color-fg-bright);
+  margin-bottom: var(--space-6);
+}
+
+/* ── Progress Track ── */
+.progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--phase-accent);
+  transition: width 1s linear, background 0.4s;
+  box-shadow: 0 0 8px var(--phase-accent);
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.btn {
+  flex: 1;
+  padding: var(--space-4) var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  background: var(--color-bg-card);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 52px;
+  transition: opacity 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+  background: var(--phase-accent);
+  color: var(--color-bg);
+  border-color: transparent;
+  transition: background 0.4s, opacity 0.15s, transform 0.1s;
+}
+
+.btn-danger {
+  color: var(--color-red);
+  border-color: rgba(243, 139, 168, 0.25);
+}
+
+/* ── Settings Toggle ── */
+.settings-toggle {
+  background: none;
+  border: none;
+  color: var(--color-fg-dim);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  transition: color 0.2s;
+}
+
+.settings-toggle:hover { color: var(--color-fg); }
+
+/* ── Settings Panel ── */
+.settings-panel {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: var(--space-5);
+  width: 100%;
+  display: none;
+}
+
+.settings-panel.open { display: block; }
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) 0;
+}
+
+.setting-row label {
+  font-size: 0.85rem;
+  color: var(--color-fg-dim);
+}
+
+.setting-row input[type="number"] {
+  width: 64px;
+  background: var(--color-bg-input);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.setting-row input[type="number"]:focus {
+  border-color: var(--phase-accent);
+}
+
+/* ── Footer ── */
+.timer-footer {
+  color: var(--color-fg-dim);
+  font-size: 0.75rem;
+  margin-top: auto;
+}
